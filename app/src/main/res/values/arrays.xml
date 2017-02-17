@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="button_bgs">
+        <item>@drawable/buttonbg1</item>
+        <item>@drawable/buttonbg2</item>
+        <item>@drawable/buttonbg3</item>
+        <item>@drawable/buttonbg4</item>
+        <item>@drawable/buttonbg5</item>
+        <item>@drawable/buttonbg6</item>
+        <item>@drawable/buttonbg7</item>
+    </integer-array>
+
+</resources>
