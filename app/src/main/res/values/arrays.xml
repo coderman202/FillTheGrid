@@ -8,6 +8,10 @@
         <item>@drawable/buttonbg5</item>
         <item>@drawable/buttonbg6</item>
         <item>@drawable/buttonbg7</item>
+        <item>@drawable/buttonbg8</item>
+        <item>@drawable/buttonbg9</item>
     </integer-array>
+
+
 
 </resources>
