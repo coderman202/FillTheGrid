@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TextViewMain">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginBottom">@dimen/textView_bottom_margin</item>
+        <item name="android:textSize">@dimen/textsize</item>
+    </style>
+
+    <style name="GridStyle">
+        <item name="android:textSize">@dimen/textsize</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="Totals">
+        <item name="android:background">@drawable/border</item>
+    </style>
+
+</resources>

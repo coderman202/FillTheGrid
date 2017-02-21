@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Fill The Grid</string>
+
+    <string name="choice">Choose difficulty level:</string>
+
+    <string name="welcome">Welcome to Fill the Grid! Fill the grid below with all the same colour
+        in as few moves as possible. Good luck!</string>
+
+    <string name="instructions">When you press on any button, all the vertically and horizontally
+        neighbouring buttons will change to the colour of the pressed button. If you press on a
+        button which is in a group of buttons which are all the same colour, the buttons surrounding
+        it will be changed in the same fashion.</string>
+
+
+    <string-array name="set_colours">
+        <item>Beginner</item>
+        <item>Novice</item>
+        <item>Student</item>
+        <item>Advanced</item>
+        <item>Expert</item>
+        <item>Wizard</item>
+        <item>God</item>
+    </string-array>
+
+    <string-array name="good_luck_message">
+        <item>Good luck, shouldn\'t be too hard!</item>
+        <item>Baby steps, but at least it\'s a bit more of a challenge!</item>
+        <item>I like your enthusiasm, good luck!</item>
+        <item>Now you\'re getting more ambitious, best of luck!</item>
+        <item>You\'re really taking on a challenge now.</item>
+        <item>Good luck Einstein!</item>
+        <item>If you complete this, I shall worship you!</item>
+    </string-array>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/game_options"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_horizontal"
+    tools:showIn="@layout/activity_main">
+
+    <TextView
+        style="@style/TextViewMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choice" />
+
+
+    <Spinner
+        android:id="@+id/set_colours"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+    </Spinner>
+</LinearLayout>
