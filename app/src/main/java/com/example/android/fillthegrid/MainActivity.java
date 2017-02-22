@@ -1,12 +1,10 @@
 package com.example.android.fillthegrid;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(MainActivity.this, "g" + position, Toast.LENGTH_SHORT).show();
+                /*Toast.makeText(MainActivity.this, "g" + position, Toast.LENGTH_SHORT).show();
 
                 Button btn = (Button) parent.getChildAt(position);
                 btn.setBackgroundResource(R.drawable.buttonbg9);
@@ -65,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 Drawable col = parent.getChildAt(position).getBackground();
                 Drawable col2 = parent.getChildAt(position+1).getBackground();
                 if(col == col2){
-                    Toast.makeText(MainActivity.this, "It's a match!", Toast.LENGTH_SHORT).show();
-                }
+                    Toast.makeText(MainActivity.this, "It's a match!", Toast.LENGTH_SHORT).show();*/
             }
         });
     }
