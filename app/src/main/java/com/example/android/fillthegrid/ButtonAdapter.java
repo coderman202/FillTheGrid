@@ -9,14 +9,14 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 /**
  * Class created by Reggie on 12-Feb-17.
  */
 
-class ButtonAdapter extends BaseAdapter {
+public class ButtonAdapter extends BaseAdapter {
 
     private Context mContext;
 
@@ -25,11 +25,11 @@ class ButtonAdapter extends BaseAdapter {
     //Default number of buttons that will be stored in my grid
     private int gridSize = 72;
 
-    ButtonAdapter(Context c) {
+    public ButtonAdapter(Context c) {
         mContext = c;
     }
 
-    void setDifficultyLevel(int level) { difficultyLevel = level; }
+    public void setDifficultyLevel(int level) { difficultyLevel = level; }
 
     public void setGridSize(int size){ gridSize = size; }
 
@@ -91,36 +91,47 @@ class ButtonAdapter extends BaseAdapter {
         //Get the background you will be setting all the neighbouring buttons/groups of buttons to
         Drawable background = v.getBackground();
 
-        //Use an arraylist to store the positions of all the neighbouring buttons/groups of buttons
-        // which are the same background
-        ArrayList<Integer> positionList = new ArrayList<>();
+        /*Use a HashSet to store the positions of all the neighbouring buttons/groups of buttons
+        which are the same background. Using a HashSet over an ArrayList because a HashSet does
+        not allow duplicates */
+        HashSet<Integer> positionList = new HashSet<>();
 
-        //Populate arraylist by checking in all directions
+        //Populate HashSet by checking in all directions.
         checkRight(v, positionList);
         checkLeft(v, positionList);
-        checkUp(v, positionList);
-        checkDown(v, positionList);
+        for(int i : positionList){
+            checkUp(parent.getChildAt(i), positionList);
+            checkDown(parent.getChildAt(i), positionList);
+            checkRight(parent.getChildAt(i), positionList);
+            checkLeft(parent.getChildAt(i), positionList);
+        }
 
-        //Loop through arraylist, create new ArrayList for each item in this one, with positions of
+        //Loop through HashSet, create new HashSet for each item in this one, with positions of
         //each button you will be changing
-        for(int i = 0; i < positionList.size(); i++){
-            ArrayList<Integer> posList = new ArrayList<>();
-            v = parent.getChildAt(positionList.get(i));
+        for(int i : positionList){
+            HashSet<Integer> posList = new HashSet<>();
 
-            setRight(v, posList);
-            setLeft(v, posList);
-            setUp(v, posList);
-            setDown(v, posList);
-
+            if(((i + 1) < gridSize) && ((i + 1) % 9 != 0)){
+                checkRight(parent.getChildAt(i + 1), posList);
+            }
+            if(((i - 1) > 0) && ((i - 2) % 9 != 0)){
+                checkLeft(parent.getChildAt(i - 1), posList);
+            }
+            if((i - 9) > 9){
+                checkUp(parent.getChildAt(i - 9), posList);
+            }
+            if((i + 9) < gridSize){
+                checkDown(parent.getChildAt(i + 9), posList);
+            }
             //Set all buttons in this group to the chosen color
-            for(int j = 0; j < posList.size(); j++){
-                parent.getChildAt(posList.get(j)).setBackground(background);
+            for(int j : posList){
+                parent.getChildAt(j).setBackground(background);
             }
         }
     }
 
-    //These next four methods for checking in all four directions for to populate the arraylist containing the positions of all buttons in the
-    private void checkRight(View v, ArrayList<Integer> posList) {
+    //These next four methods for checking in all four directions for to populate the HashSet containing the positions of all buttons in the
+    private void checkRight(View v, HashSet posList) {
         ViewGroup parent = (ViewGroup) v.getParent();
         int position = (Integer) v.getTag();
 
@@ -128,16 +139,16 @@ class ButtonAdapter extends BaseAdapter {
         Drawable background = v.getBackground();
         Drawable bgr = background;
 
-        while ((bgr == background) && ((position) % 8 != 0) && (position < gridSize)) {
+        while ((bgr == background) && ((position) % 9 != 0) && (position < gridSize)) {
+            posList.add(position);
             position += 1;
-            bgr = parent.getChildAt(position).getBackground();
-            checkUp(v, posList);
-            checkDown(v, posList);
+            v = parent.getChildAt(position);
+            bgr = v.getBackground();
         }
-        posList.add(position);
+
     }
 
-    private void checkLeft(View v, ArrayList<Integer> posList) {
+    private void checkLeft(View v, HashSet posList) {
         ViewGroup parent = (ViewGroup) v.getParent();
         int position = (Integer) v.getTag();
 
@@ -145,16 +156,15 @@ class ButtonAdapter extends BaseAdapter {
         Drawable background = v.getBackground();
         Drawable bgl = background;
 
-        while ((bgl == background) && ((position) % 9 != 0) && (position > 0)) {
+        while ((bgl == background) && ((position - 1) % 9 != 0) && (position > 0)) {
+            posList.add(position);
             position -= 1;
-            bgl = parent.getChildAt(position).getBackground();
-            checkUp(v, posList);
-            checkDown(v, posList);
+            v = parent.getChildAt(position);
+            bgl = v.getBackground();
         }
-        posList.add(position);
     }
 
-    private void checkUp(View v, ArrayList<Integer> posList) {
+    private void checkUp(View v, HashSet posList) {
         ViewGroup parent = (ViewGroup) v.getParent();
         int position = (Integer) v.getTag();
 
@@ -163,15 +173,14 @@ class ButtonAdapter extends BaseAdapter {
         Drawable bgu = background;
 
         while ((bgu == background) && (position > 9)) {
+            posList.add(position);
             position -= 9;
-            bgu = parent.getChildAt(position).getBackground();
-            checkLeft(v, posList);
-            checkRight(v, posList);
+            v = parent.getChildAt(position);
+            bgu = v.getBackground();
         }
-        posList.add(position);
     }
 
-    private void checkDown(View v, ArrayList<Integer> posList) {
+    private void checkDown(View v, HashSet posList) {
         ViewGroup parent = (ViewGroup) v.getParent();
         int position = (Integer) v.getTag();
 
@@ -180,79 +189,10 @@ class ButtonAdapter extends BaseAdapter {
         Drawable bgd = background;
 
         while ((bgd == background) && (position < (gridSize - 9))) {
-            position += 9;
-            bgd = parent.getChildAt(position).getBackground();
-            checkLeft(v, posList);
-            checkRight(v, posList);
-        }
-        posList.add(position);
-    }
-
-    private void setRight(View v, ArrayList<Integer> posList) {
-        ViewGroup parent = (ViewGroup) v.getParent();
-        int position = (Integer) v.getTag();
-
-        //Get button background
-        Drawable background = v.getBackground();
-        Drawable bgr = background;
-
-        while ((bgr == background) && ((position) % 8 != 0) && (position < gridSize)) {
-            posList.add(position);
-            position += 1;
-            bgr = parent.getChildAt(position).getBackground();
-            setUp(v, posList);
-            setDown(v, posList);
-        }
-    }
-
-    private void setLeft(View v, ArrayList<Integer> posList) {
-        ViewGroup parent = (ViewGroup) v.getParent();
-        int position = (Integer) v.getTag();
-
-        //Get button background
-        Drawable background = v.getBackground();
-        Drawable bgl = background;
-
-        while ((bgl == background) && ((position) % 9 != 0) && (position > 0)) {
-            posList.add(position);
-            position -= 1;
-            bgl = parent.getChildAt(position).getBackground();
-            setUp(v, posList);
-            setDown(v, posList);
-        }
-    }
-
-    private void setUp(View v, ArrayList<Integer> posList) {
-        ViewGroup parent = (ViewGroup) v.getParent();
-        int position = (Integer) v.getTag();
-
-        //Get button background
-        Drawable background = v.getBackground();
-        Drawable bgu = background;
-
-        while ((bgu == background) && (position > 9)) {
-            posList.add(position);
-            position -= 9;
-            bgu = parent.getChildAt(position).getBackground();
-            setLeft(v, posList);
-            setRight(v, posList);
-        }
-    }
-
-    private void setDown(View v, ArrayList<Integer> posList) {
-        ViewGroup parent = (ViewGroup) v.getParent();
-        int position = (Integer) v.getTag();
-
-        //Get button background
-        Drawable background = v.getBackground();
-        Drawable bgd = background;
-
-        while ((bgd == background) && (position < (gridSize))) {
             posList.add(position);
             position += 9;
-            bgd = parent.getChildAt(position).getBackground();
-            setLeft(v, posList);
-            setRight(v, posList);
+            v = parent.getChildAt(position);
+            bgd = v.getBackground();
         }
     }
 }
